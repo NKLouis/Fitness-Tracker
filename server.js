@@ -19,7 +19,7 @@ const htmlRoutes = require("./routes/html");
 app.use(htmlRoutes);
 app.use("/api", apiRoutes);
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutsdb", { useNewUrlParser: true, useUnifiedTopology: false, });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutsdb", { useNewUrlParser: true, useUnifiedTopology: true, });
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
