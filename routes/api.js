@@ -4,8 +4,8 @@ const router = express.Router();
 const db = require("../models")
 
     //getting exercise
-    router.get("/workouts", (req, res)=> {
-        db.Workout.find({})
+    router.get("/api/workouts", (req, res)=> {
+        db.Workout.find()
         .then(dbWorkouts => {
             res.json(dbWorkouts)
         }).catch(error=> {
@@ -14,8 +14,8 @@ const db = require("../models")
     });
 
     //adding exercise
-    router.post("/workouts", ({body}, res)=> {
-        db.Workout.create(body)
+    router.post("/api/workouts", (req, res)=> {
+        db.Workout.create({})
         .then(dbWorkouts => {
             res.json(dbWorkouts)
         }).catch(error=> {
@@ -24,11 +24,11 @@ const db = require("../models")
     }); 
 
     //updating exercise
-    router.put("/workouts/:id" , (req, res) => {
+    router.put("/api/workouts/:id" , ({body, params}, res) => {
      db.Workout.findByIdAndUpdate(
-      req.params.id,
+      params.id,
       {
-        $push: { exercises: req.body },
+        $push: { exercises: body },
       },
       { useFindAndModify: true }
     )
@@ -41,7 +41,7 @@ const db = require("../models")
     });
 
     // getting stats page
-    router.get("/workouts/range", (req, res) => {
+    router.get("/api/workouts/range", (req, res) => {
         db.Workout.find({}).sort({ day: -1 }).limit(7)
         .then(dbWorkouts => {
             res.json(dbWorkouts)
